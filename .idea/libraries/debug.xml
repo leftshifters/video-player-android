@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="debug">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/AndroidVideoLibrary/app/build/pre-dexed/debug/support-v4-19.0.1-a80b81fb347838b2e9a4c1329f506729cbb7c2b3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/AndroidVideoLibrary/app/build/pre-dexed/debug/classes-281821189cf5860b515a6723b95ae73eb72f44ff.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
