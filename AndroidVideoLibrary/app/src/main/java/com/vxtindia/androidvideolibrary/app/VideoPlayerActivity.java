@@ -146,7 +146,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
 
     // Implement VideoMediaController.MediaPlayerControl
-        @Override
+    @Override
     public void start() {
         player.start();
     }
