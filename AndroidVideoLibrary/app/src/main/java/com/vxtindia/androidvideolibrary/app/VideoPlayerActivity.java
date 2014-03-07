@@ -2,6 +2,8 @@ package com.vxtindia.androidvideolibrary.app;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -22,6 +24,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         VideoControllerView.MediaPlayerControl{
 
     private static final String TAG = "VideoPlayerActivity" ;
+    private String url="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
 
     private SurfaceView videoSurface;
     private MediaPlayer player;
@@ -55,7 +58,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         try {
             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            player.setDataSource(this, Uri.parse("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"));
+            player.setDataSource(this, Uri.parse(url));
             player.setOnPreparedListener(this);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -76,6 +79,14 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         if(player != null){
             player.release();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        Log.d(TAG , "onConfigurationChanged");
+        setScreenSize();
     }
 
     @Override
@@ -121,24 +132,17 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     public void setScreenSize(){
 
+        Log.d(TAG , "setScreenSize");
+
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
         int screenHeight = getResources().getDisplayMetrics().heightPixels;
 
         ViewGroup.LayoutParams lp = videoSurface.getLayoutParams();
-        lp.width = screenWidth;
 
-        if(fullScreen){
+        int videoWidth = player.getVideoWidth();
+        int videoHeight = player.getVideoHeight();
 
-            lp.height = screenHeight;
-
-        }else{
-
-            int videoWidth = player.getVideoWidth();
-            int videoHeight = player.getVideoHeight();
-
-            lp.height = (int) (((float) videoHeight / (float) videoWidth) * (float) screenWidth);
-
-        }
+        lp.height = (int) (((float) videoHeight / (float) videoWidth) * (float) screenWidth);
 
         videoSurface.setLayoutParams(lp);
 
@@ -198,7 +202,14 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         fullScreen = !fullScreen;
 
         controller.updateFullScreen();
-        setScreenSize();
+
+        if(fullScreen){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+        else{
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
     }
     //End VideoControllerView.MediaPlayerControl
 
@@ -220,7 +231,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     public void onCompletion(MediaPlayer mediaPlayer) {
         Log.d(TAG, "OnCompletion");
         mediaPlayer.seekTo(0);
-        //mediaPlayer.reset();
     }
 
     @Override
