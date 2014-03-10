@@ -1,7 +1,9 @@
 package com.vxtindia.androidvideolibrary.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
@@ -24,7 +26,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         VideoControllerView.MediaPlayerControl{
 
     private static final String TAG = "VideoPlayerActivity" ;
-    private String url="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
+    private String url="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp";
 
     private SurfaceView videoSurface;
     private MediaPlayer player;
@@ -41,8 +43,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
 
-        progressDialog = new ProgressDialog(this);
-
         videoSurface = (SurfaceView) findViewById(R.id.videoSurface);
 
         SurfaceHolder videoHolder = videoSurface.getHolder();
@@ -51,10 +51,14 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         player = new MediaPlayer();
         controller = new VideoControllerView(this,false);
 
+        player.setOnErrorListener(this);
 
-        progressDialog.show();
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
         progressDialog.setMessage(getResources().getString(R.string.loading_video));
-
+        progressDialog.show();
 
         try {
             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -119,6 +123,8 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         progressDialog.dismiss();
 
+        fullScreen = getScreenOrientation();
+
         controller.setMediaPlayer(this);
         controller.setAnchorView((FrameLayout) findViewById(R.id.videoSurfaceContainer));
         player.setOnBufferingUpdateListener(this);
@@ -130,12 +136,25 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     }
     // End MediaPlayer.OnPreparedListener
 
+    public boolean getScreenOrientation(){
+
+        int orientation = getResources().getConfiguration().orientation;
+        if(orientation == Configuration.ORIENTATION_PORTRAIT){
+            return false;
+        }
+        else if(orientation == Configuration.ORIENTATION_LANDSCAPE){
+            return true;
+        }
+        else
+            return false;
+    }
+
     public void setScreenSize(){
 
         Log.d(TAG , "setScreenSize");
 
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
-        int screenHeight = getResources().getDisplayMetrics().heightPixels;
+        //int screenHeight = getResources().getDisplayMetrics().heightPixels;
 
         ViewGroup.LayoutParams lp = videoSurface.getLayoutParams();
 
@@ -147,7 +166,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         videoSurface.setLayoutParams(lp);
 
     }
-
 
     // Implement VideoMediaController.MediaPlayerControl
     @Override
@@ -233,10 +251,36 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         mediaPlayer.seekTo(0);
     }
 
+    //Implement MediaPlayer.OnErrorListener
     @Override
     public boolean onError(MediaPlayer mediaPlayer, int framework_err, int impl_err) {
 
         Log.d(TAG, "Error: " + framework_err + "," + impl_err);
+
+        if(progressDialog != null && progressDialog.isShowing())
+            progressDialog.dismiss();
+
+        showErrorAlertDialog();
         return true;
     }
+    //End MediaPlayer.OnErrorListener
+
+    public void showErrorAlertDialog(){
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(R.string.error_dialog_title)
+                .setCancelable(false)
+                .setMessage(R.string.error_dialog_message)
+                .setPositiveButton(R.string.error_dialog_button, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                            VideoPlayerActivity.this.finish();
+                    }
+                });
+        AlertDialog alert=alertDialogBuilder.create();
+        alert.show();
+
+    }
+
 }
