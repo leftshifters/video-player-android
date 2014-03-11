@@ -63,8 +63,23 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         SurfaceHolder videoHolder = videoSurface.getHolder();
         videoHolder.addCallback(this);
 
-        player = new MediaPlayer();
         controller = new VideoControllerView(this,false);
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d(TAG, "onStart");
+        super.onStart();
+
+        player = new MediaPlayer();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d(TAG, "onResume");
+        super.onResume();
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(false);
@@ -78,9 +93,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
             player.setDataSource(this, Uri.parse(url));
             player.setOnPreparedListener(this);
 
-            player.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
-            player.setScreenOnWhilePlaying(true);
-
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (SecurityException e) {
@@ -93,10 +105,25 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     }
 
     @Override
+    protected void onPause() {
+        Log.d(TAG, "onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d(TAG, "onStop");
+        super.onStop();
+
+        if(player != null){
+            player.release();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 
-        Log.d("OnDestroy", "onDestroy");
         if(player != null){
             player.release();
         }
@@ -125,6 +152,8 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         player.setDisplay(holder);
+        player.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
+        player.setScreenOnWhilePlaying(true);
         player.prepareAsync();
     }
 
