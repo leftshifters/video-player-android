@@ -10,6 +10,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -65,9 +66,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         player = new MediaPlayer();
         controller = new VideoControllerView(this,false);
 
-        player.setOnErrorListener(this);
-
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(false);
@@ -76,8 +74,12 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         try {
             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            player.setOnErrorListener(this);
             player.setDataSource(this, Uri.parse(url));
             player.setOnPreparedListener(this);
+
+            player.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
+            player.setScreenOnWhilePlaying(true);
 
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
