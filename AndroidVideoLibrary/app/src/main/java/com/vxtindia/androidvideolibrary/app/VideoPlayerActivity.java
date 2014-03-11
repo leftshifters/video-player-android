@@ -7,10 +7,8 @@ import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
-import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,24 +16,29 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 //using http://www.brightec.co.uk/blog/custom-android-media-controller
-public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callback, MediaPlayer.OnPreparedListener, MediaPlayer.OnBufferingUpdateListener,
+public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callback,
+        MediaPlayer.OnPreparedListener,
+        MediaPlayer.OnBufferingUpdateListener,
         MediaPlayer.OnCompletionListener,
         MediaPlayer.OnErrorListener,
         VideoControllerView.MediaPlayerControl{
 
     private static final String TAG = "VideoPlayerActivity" ;
-    private String url="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
+    public static final String KEY_VIDEO_TITLE = "keyVideoLabel";
+    public static final String KEY_URL_STRING = "keyUrlString";
+    private String url = "";
+    private String videoTitle = "";
 
+
+    private TextView tvVideoTitle;
     private SurfaceView videoSurface;
     private MediaPlayer player;
     private VideoControllerView controller;
-
-    private MediaMetadataRetriever retriever;
 
     private ProgressDialog progressDialog;
 
@@ -48,6 +51,12 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
 
+        videoTitle = getIntent().getStringExtra(KEY_VIDEO_TITLE);
+        url = getIntent().getStringExtra(KEY_URL_STRING);
+
+        tvVideoTitle = (TextView) findViewById(R.id.videoTitle);
+        tvVideoTitle.setText(videoTitle);
+
         videoSurface = (SurfaceView) findViewById(R.id.videoSurface);
 
         SurfaceHolder videoHolder = videoSurface.getHolder();
@@ -55,10 +64,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         player = new MediaPlayer();
         controller = new VideoControllerView(this,false);
-        retriever = new MediaMetadataRetriever();
-
-        if (Build.VERSION.SDK_INT >= 14)
-            retriever.setDataSource(url, new HashMap<String, String>());
 
         player.setOnErrorListener(this);
 
@@ -73,6 +78,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
             player.setAudioStreamType(AudioManager.STREAM_MUSIC);
             player.setDataSource(this, Uri.parse(url));
             player.setOnPreparedListener(this);
+
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (SecurityException e) {
@@ -140,9 +146,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         player.setOnCompletionListener(this);
 
         setScreenSize();
-
-
-        Log.d(TAG, "Title:" + retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
 
         player.start();
     }
