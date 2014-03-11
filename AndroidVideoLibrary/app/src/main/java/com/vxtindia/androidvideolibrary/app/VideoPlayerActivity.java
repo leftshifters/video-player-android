@@ -72,7 +72,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     protected void onStart() {
         Log.d(TAG, "onStart");
         super.onStart();
-
         player = new MediaPlayer();
     }
 
