@@ -7,8 +7,10 @@ import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 //using http://www.brightec.co.uk/blog/custom-android-media-controller
 public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callback, MediaPlayer.OnPreparedListener, MediaPlayer.OnBufferingUpdateListener,
@@ -26,11 +29,13 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         VideoControllerView.MediaPlayerControl{
 
     private static final String TAG = "VideoPlayerActivity" ;
-    private String url="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp";
+    private String url="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4";
 
     private SurfaceView videoSurface;
     private MediaPlayer player;
     private VideoControllerView controller;
+
+    private MediaMetadataRetriever retriever;
 
     private ProgressDialog progressDialog;
 
@@ -50,6 +55,10 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         player = new MediaPlayer();
         controller = new VideoControllerView(this,false);
+        retriever = new MediaMetadataRetriever();
+
+        if (Build.VERSION.SDK_INT >= 14)
+            retriever.setDataSource(url, new HashMap<String, String>());
 
         player.setOnErrorListener(this);
 
@@ -132,6 +141,9 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         setScreenSize();
 
+
+        Log.d(TAG, "Title:" + retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE));
+
         player.start();
     }
     // End MediaPlayer.OnPreparedListener
@@ -151,7 +163,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     public void setScreenSize(){
 
-        Log.d(TAG , "setScreenSize");
+        Log.d(TAG, "setScreenSize");
 
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
         //int screenHeight = getResources().getDisplayMetrics().heightPixels;
@@ -160,7 +172,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         int videoWidth = player.getVideoWidth();
         int videoHeight = player.getVideoHeight();
-
+         
         lp.height = (int) (((float) videoHeight / (float) videoWidth) * (float) screenWidth);
 
         videoSurface.setLayoutParams(lp);
@@ -274,7 +286,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
                 .setPositiveButton(R.string.error_dialog_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.cancel();
+                            dialogInterface.dismiss();
                             VideoPlayerActivity.this.finish();
                     }
                 });

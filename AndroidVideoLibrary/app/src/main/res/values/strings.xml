@@ -5,7 +5,8 @@
     <string name="play">Play</string>
     <string name="pause">Pause</string>
     <string name="description">Media Controls</string>
-    <string name="title_activity_video_player_activity1">VideoPlayerActivity1</string>
+    <string name="title_activity_video_player_activity">VideoPlayerActivity</string>
+    <string name="title_main_activity">MainActivity</string>
     <string name="loading_video">Loading...</string>
     <string name="error_dialog_title">Error!</string>
     <string name="error_dialog_message">An error occurred while playing this video.</string>
