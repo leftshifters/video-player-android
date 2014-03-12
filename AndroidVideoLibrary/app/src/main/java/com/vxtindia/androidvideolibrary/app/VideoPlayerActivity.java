@@ -11,6 +11,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -47,6 +49,9 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     private boolean fullScreen = false;
 
+    private PhoneStateListener phoneStateListener;
+    private TelephonyManager telephonyManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,24 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         controller = new VideoControllerView(this,false);
 
+        phoneStateListener =  new PhoneStateListener(){
+            @Override
+            public void onCallStateChanged(int state, String incomingNumber) {
+
+                if(state == TelephonyManager.CALL_STATE_RINGING){
+                    //pause video
+
+                    Log.d(TAG, "pause video");
+                }else if(state == TelephonyManager.CALL_STATE_IDLE){
+
+                }else if(state == TelephonyManager.CALL_STATE_OFFHOOK){
+
+                }
+
+                super.onCallStateChanged(state, incomingNumber);
+            }
+        };
+
 
     }
 
@@ -72,6 +95,11 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     protected void onStart() {
         Log.d(TAG, "onStart");
         super.onStart();
+
+        telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        if(telephonyManager != null){
+            telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+        }
         player = new MediaPlayer();
     }
 
@@ -114,6 +142,9 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         Log.d(TAG, "onStop");
         super.onStop();
 
+        if(telephonyManager != null){
+            telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+        }
         if(player != null){
             player.release();
         }
