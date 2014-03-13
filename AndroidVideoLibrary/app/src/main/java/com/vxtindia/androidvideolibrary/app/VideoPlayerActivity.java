@@ -11,8 +11,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -48,9 +46,10 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     private int bufferPosition;
 
     private boolean fullScreen = false;
+    private boolean playerCreated = false;
 
-    private PhoneStateListener phoneStateListener;
-    private TelephonyManager telephonyManager;
+    private boolean videoReady = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,25 +69,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         controller = new VideoControllerView(this,false);
 
-        phoneStateListener =  new PhoneStateListener(){
-            @Override
-            public void onCallStateChanged(int state, String incomingNumber) {
-
-                if(state == TelephonyManager.CALL_STATE_RINGING){
-                    //pause video
-
-                    Log.d(TAG, "pause video");
-                }else if(state == TelephonyManager.CALL_STATE_IDLE){
-
-                }else if(state == TelephonyManager.CALL_STATE_OFFHOOK){
-
-                }
-
-                super.onCallStateChanged(state, incomingNumber);
-            }
-        };
-
-
     }
 
     @Override
@@ -96,11 +76,11 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         Log.d(TAG, "onStart");
         super.onStart();
 
-        telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        if(telephonyManager != null){
-            telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_CALL_STATE);
+        if(player == null){
+            Log.d(TAG, "player created");
+            player = new MediaPlayer();
+            playerCreated = true;
         }
-        player = new MediaPlayer();
     }
 
     @Override
@@ -108,33 +88,51 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         Log.d(TAG, "onResume");
         super.onResume();
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setIndeterminate(false);
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage(getResources().getString(R.string.loading_video));
-        progressDialog.show();
+        if(playerCreated ){
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setIndeterminate(false);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage(getResources().getString(R.string.loading_video));
+            progressDialog.show();
 
-        try {
-            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            player.setOnErrorListener(this);
-            player.setDataSource(this, Uri.parse(url));
-            player.setOnPreparedListener(this);
+            try {
+                player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                player.setOnErrorListener(this);
+                player.setDataSource(this, Uri.parse(url));
+                player.setOnPreparedListener(this);
 
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+                videoReady = true;
+                player.prepareAsync();
+
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        else{
+            //player.start();
+            controller.show();
+        }
+
     }
 
     @Override
     protected void onPause() {
         Log.d(TAG, "onPause");
         super.onPause();
+
+        if(player != null && player.isPlaying()){
+            //player.release();
+            player.pause();
+        }
+        playerCreated = false;
+        videoReady = false;
+
     }
 
     @Override
@@ -142,20 +140,25 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         Log.d(TAG, "onStop");
         super.onStop();
 
-        if(telephonyManager != null){
-            telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+        if(player != null && player.isPlaying()){
+            //player.release();
+            player.pause();
         }
-        if(player != null){
-            player.release();
-        }
+
+        playerCreated = false;
+        videoReady = false;
+
     }
 
     @Override
     protected void onDestroy() {
+
+        Log.d(TAG, "onDestroy");
         super.onDestroy();
 
         if(player != null){
             player.release();
+            player = null;
         }
     }
 
@@ -181,10 +184,10 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        Log.d(TAG , "Surface created");
         player.setDisplay(holder);
-        player.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
-        player.setScreenOnWhilePlaying(true);
-        player.prepareAsync();
+
+        //player.prepareAsync();
     }
 
     @Override
@@ -197,18 +200,32 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     @Override
     public void onPrepared(MediaPlayer mp) {
 
+        Log.d(TAG , "onPrepared");
+
+        //statePrepared = true;
+
         progressDialog.dismiss();
 
         fullScreen = getScreenOrientation();
+
 
         controller.setMediaPlayer(this);
         controller.setAnchorView((FrameLayout) findViewById(R.id.videoSurfaceContainer));
         player.setOnBufferingUpdateListener(this);
         player.setOnCompletionListener(this);
 
+        player.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
+        player.setScreenOnWhilePlaying(true);
+
         setScreenSize();
 
-        player.start();
+        if(videoReady){
+            player.start();
+
+
+            Log.d(TAG, "player started");
+        }
+
     }
     // End MediaPlayer.OnPreparedListener
 
@@ -332,6 +349,8 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     public boolean onError(MediaPlayer mediaPlayer, int framework_err, int impl_err) {
 
         Log.d(TAG, "Error: " + framework_err + "," + impl_err);
+
+        //statePrepared=false;
 
         if(progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
