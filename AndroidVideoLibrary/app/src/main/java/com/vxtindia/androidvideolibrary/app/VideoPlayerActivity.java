@@ -88,7 +88,9 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         Log.d(TAG, "onResume");
         super.onResume();
 
-        if(playerCreated ){
+        fullScreen = getScreenOrientation();
+
+        if(playerCreated){
             progressDialog = new ProgressDialog(this);
             progressDialog.setIndeterminate(false);
             progressDialog.setCancelable(false);
@@ -202,8 +204,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         Log.d(TAG , "onPrepared");
 
-        //statePrepared = true;
-
         progressDialog.dismiss();
 
         fullScreen = getScreenOrientation();
@@ -221,7 +221,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         if(videoReady){
             player.start();
-
 
             Log.d(TAG, "player started");
         }
@@ -288,6 +287,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     }
     @Override
     public int getBufferPercentage() {
+        //Log.d(TAG, "buffer Percentage=" + bufferPosition);
         return bufferPosition;
     }
     @Override
