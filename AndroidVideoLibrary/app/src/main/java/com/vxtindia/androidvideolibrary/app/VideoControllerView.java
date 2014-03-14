@@ -49,8 +49,8 @@ public class VideoControllerView extends FrameLayout {
 
     StringBuilder               mFormatBuilder;
     Formatter                   mFormatter;
-    private ImageButton         mPauseButton;
 
+    private ImageButton         mPauseButton;
     private ImageButton         mFullscreenButton;
     private Handler             mHandler = new MessageHandler(this);
 
@@ -226,17 +226,20 @@ public class VideoControllerView extends FrameLayout {
      * Remove the controller from the screen.
      */
     public void hide() {
-        if (mAnchor == null) {
+        if (mAnchor == null || mPlayer == null) {
             return;
         }
 
         try {
-            mAnchor.removeView(this);
-            mHandler.removeMessages(SHOW_PROGRESS);
+            if(mPlayer.isPlaying()){
+                mAnchor.removeView(this);
+                mHandler.removeMessages(SHOW_PROGRESS);
+                mShowing = false;
+            }
         } catch (IllegalArgumentException ex) {
             Log.w("MediaController", "already removed");
         }
-        mShowing = false;
+        //mShowing = false;
     }
 
     private String stringForTime(int timeMs) {
@@ -482,35 +485,6 @@ public class VideoControllerView extends FrameLayout {
         //info.setClassName(VideoControllerView.class.getName());
     }
 
-    private View.OnClickListener mRewListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            if (mPlayer == null) {
-                return;
-            }
-
-            int pos = mPlayer.getCurrentPosition();
-            pos -= 5000; // milliseconds
-            mPlayer.seekTo(pos);
-            setProgress();
-
-            show(sDefaultTimeout);
-        }
-    };
-
-    private View.OnClickListener mFfwdListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            if (mPlayer == null) {
-                return;
-            }
-
-            int pos = mPlayer.getCurrentPosition();
-            pos += 15000; // milliseconds
-            mPlayer.seekTo(pos);
-            setProgress();
-
-            show(sDefaultTimeout);
-        }
-    };
 
 
 
@@ -523,8 +497,6 @@ public class VideoControllerView extends FrameLayout {
         boolean isPlaying();
         int     getBufferPercentage();
         boolean canPause();
-        boolean canSeekBackward();
-        boolean canSeekForward();
         boolean isFullScreen();
         void    toggleFullScreen();
     }
