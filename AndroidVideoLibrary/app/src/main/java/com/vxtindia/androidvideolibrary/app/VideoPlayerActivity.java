@@ -2,7 +2,6 @@ package com.vxtindia.androidvideolibrary.app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -15,8 +14,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -41,9 +42,10 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     private MediaPlayer player;
     private VideoControllerView controller;
 
-    private ProgressDialog progressDialog;
+    private LinearLayout layoutProgressBar;
 
     private int bufferPosition;
+    private int mCurrentPosition=-1;
 
     private boolean fullScreen = false;
     private boolean playerCreated = false;
@@ -54,7 +56,10 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_video_player);
+
+        layoutProgressBar = (LinearLayout) findViewById(R.id.layoutPregressBar);
 
         videoTitle = getIntent().getStringExtra(KEY_VIDEO_TITLE);
         url = getIntent().getStringExtra(KEY_URL_STRING);
@@ -91,11 +96,8 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         fullScreen = getScreenOrientation();
 
         if(playerCreated){
-            progressDialog = new ProgressDialog(this);
-            progressDialog.setIndeterminate(false);
-            progressDialog.setCancelable(false);
-            progressDialog.setMessage(getResources().getString(R.string.loading_video));
-            progressDialog.show();
+
+            layoutProgressBar.setVisibility(View.VISIBLE);
 
             try {
                 player.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -117,7 +119,11 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
             }
         }
         else{
+            //player.seekTo(0);
             //player.start();
+            //player.seekTo(mCurrentPosition);
+           // player.start();
+            //player.pause();
             controller.show();
         }
 
@@ -128,13 +134,16 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         Log.d(TAG, "onPause");
         super.onPause();
 
+        //mCurrentPosition = player.getCurrentPosition();
+
         if(player != null && player.isPlaying()){
             //player.release();
             player.pause();
         }
+
+        Log.d("TAG", "currentPosition"+ mCurrentPosition);
         playerCreated = false;
         videoReady = false;
-
     }
 
     @Override
@@ -142,10 +151,12 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         Log.d(TAG, "onStop");
         super.onStop();
 
+        mCurrentPosition = getCurrentPosition();
         if(player != null && player.isPlaying()){
             //player.release();
             player.pause();
         }
+
 
         playerCreated = false;
         videoReady = false;
@@ -162,6 +173,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
             player.release();
             player = null;
         }
+        controller.setMediaPlayer(null);
     }
 
     @Override
@@ -169,7 +181,10 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         super.onConfigurationChanged(newConfig);
 
         Log.d(TAG , "onConfigurationChanged");
+
+        fullScreen = getScreenOrientation();
         setScreenSize();
+        controller.updateFullScreen();
     }
 
     @Override
@@ -188,13 +203,12 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     public void surfaceCreated(SurfaceHolder holder) {
         Log.d(TAG , "Surface created");
         player.setDisplay(holder);
-
-        //player.prepareAsync();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         Log.d(TAG , "Surface Destroyed");
+        mCurrentPosition = player.getCurrentPosition();
     }
     // End SurfaceHolder.Callback
 
@@ -204,7 +218,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         Log.d(TAG , "onPrepared");
 
-        progressDialog.dismiss();
+        layoutProgressBar.setVisibility(View.GONE);
 
         fullScreen = getScreenOrientation();
 
@@ -283,7 +297,8 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     public boolean isPlaying() {
-        return player.isPlaying();
+            return player.isPlaying();
+
     }
     @Override
     public int getBufferPercentage() {
@@ -295,14 +310,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         return true;
     }
 
-    @Override
-    public boolean canSeekBackward() {
-        return true;
-    }
-    @Override
-    public boolean canSeekForward() {
-        return true;
-    }
+
     @Override
     public boolean isFullScreen() {
         return fullScreen;
@@ -352,8 +360,10 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         //statePrepared=false;
 
-        if(progressDialog != null && progressDialog.isShowing())
-            progressDialog.dismiss();
+        if(layoutProgressBar != null && layoutProgressBar.getVisibility() == View.VISIBLE){
+
+            layoutProgressBar.setVisibility(View.GONE);
+        }
 
         showErrorAlertDialog();
         return true;
