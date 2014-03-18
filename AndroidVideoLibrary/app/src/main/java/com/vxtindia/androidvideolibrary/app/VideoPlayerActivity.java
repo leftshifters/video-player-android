@@ -9,7 +9,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -48,9 +47,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     private int mCurrentPosition=-1;
 
     private boolean fullScreen = false;
-    private boolean playerCreated = false;
-
-    private boolean videoReady = false;
 
 
     @Override
@@ -80,12 +76,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     protected void onStart() {
         Log.d(TAG, "onStart");
         super.onStart();
-
-        if(player == null){
-            Log.d(TAG, "player created");
-            player = new MediaPlayer();
-            playerCreated = true;
-        }
     }
 
     @Override
@@ -95,72 +85,50 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         fullScreen = getScreenOrientation();
 
-        if(playerCreated){
-
+        if(player==null){
+            Log.d(TAG, "player created");
+            player =new MediaPlayer();
             layoutProgressBar.setVisibility(View.VISIBLE);
-
-            try {
-                player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                player.setOnErrorListener(this);
-                player.setDataSource(this, Uri.parse(url));
-                player.setOnPreparedListener(this);
-
-                videoReady = true;
-                player.prepareAsync();
-
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            prepareVideo();
         }
         else{
-            //player.seekTo(0);
-            //player.start();
-            //player.seekTo(mCurrentPosition);
-           // player.start();
-            //player.pause();
             controller.show();
         }
 
+    }
+
+    private void prepareVideo(){
+        try {
+            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            player.setOnErrorListener(this);
+            player.setDataSource(this, Uri.parse(url));
+            player.setOnPreparedListener(this);
+            player.setOnBufferingUpdateListener(this);
+            player.setOnCompletionListener(this);
+
+            player.prepareAsync();
+
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onPause() {
         Log.d(TAG, "onPause");
         super.onPause();
-
-        //mCurrentPosition = player.getCurrentPosition();
-
-        if(player != null && player.isPlaying()){
-            //player.release();
-            player.pause();
-        }
-
-        Log.d("TAG", "currentPosition"+ mCurrentPosition);
-        playerCreated = false;
-        videoReady = false;
     }
 
     @Override
     protected void onStop() {
         Log.d(TAG, "onStop");
         super.onStop();
-
-        mCurrentPosition = getCurrentPosition();
-        if(player != null && player.isPlaying()){
-            //player.release();
-            player.pause();
-        }
-
-
-        playerCreated = false;
-        videoReady = false;
-
     }
 
     @Override
@@ -203,12 +171,21 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     public void surfaceCreated(SurfaceHolder holder) {
         Log.d(TAG , "Surface created");
         player.setDisplay(holder);
+        player.setScreenOnWhilePlaying(true);
+
+        if(mCurrentPosition == -1)
+            player.start();
+        else{
+            //player.seekTo(0);
+            player.seekTo(mCurrentPosition);
+        }
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         Log.d(TAG , "Surface Destroyed");
         mCurrentPosition = player.getCurrentPosition();
+        player.pause();
     }
     // End SurfaceHolder.Callback
 
@@ -217,27 +194,11 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     public void onPrepared(MediaPlayer mp) {
 
         Log.d(TAG , "onPrepared");
-
         layoutProgressBar.setVisibility(View.GONE);
-
         fullScreen = getScreenOrientation();
-
-
         controller.setMediaPlayer(this);
         controller.setAnchorView((FrameLayout) findViewById(R.id.videoSurfaceContainer));
-        player.setOnBufferingUpdateListener(this);
-        player.setOnCompletionListener(this);
-
-        player.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
-        player.setScreenOnWhilePlaying(true);
-
         setScreenSize();
-
-        if(videoReady){
-            player.start();
-
-            Log.d(TAG, "player started");
-        }
 
     }
     // End MediaPlayer.OnPreparedListener
@@ -245,14 +206,14 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     public boolean getScreenOrientation(){
 
         int orientation = getResources().getConfiguration().orientation;
-        if(orientation == Configuration.ORIENTATION_PORTRAIT){
-            return false;
-        }
-        else if(orientation == Configuration.ORIENTATION_LANDSCAPE){
+
+        if(orientation == Configuration.ORIENTATION_LANDSCAPE){
             return true;
-        }
-        else
+        }else if(orientation == Configuration.ORIENTATION_PORTRAIT){
             return false;
+        }
+
+        return false;
     }
 
     public void setScreenSize(){
