@@ -28,7 +28,8 @@
             android:name="com.vxtindia.androidvideolibrary.app.VideoPlayerActivity"
             android:label="@string/app_name"
             android:configChanges="orientation|screenSize"
-            android:parentActivityName="com.vxtindia.androidvideolibrary.app.MainActivity">
+            android:parentActivityName="com.vxtindia.androidvideolibrary.app.MainActivity"
+            android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
