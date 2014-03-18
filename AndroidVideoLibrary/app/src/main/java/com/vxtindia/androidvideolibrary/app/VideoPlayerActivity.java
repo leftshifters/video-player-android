@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.io.IOException;
 
@@ -36,7 +35,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     private String videoTitle = "";
 
 
-    private TextView tvVideoTitle;
     private SurfaceView videoSurface;
     private MediaPlayer player;
     private VideoControllerView controller;
@@ -60,8 +58,8 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         videoTitle = getIntent().getStringExtra(KEY_VIDEO_TITLE);
         url = getIntent().getStringExtra(KEY_URL_STRING);
 
-        tvVideoTitle = (TextView) findViewById(R.id.videoTitle);
-        tvVideoTitle.setText(videoTitle);
+
+        setTitle(videoTitle);
 
         videoSurface = (SurfaceView) findViewById(R.id.videoSurface);
 
