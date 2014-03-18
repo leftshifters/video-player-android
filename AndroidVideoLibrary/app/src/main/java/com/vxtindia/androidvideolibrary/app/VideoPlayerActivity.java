@@ -68,6 +68,8 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         controller = new VideoControllerView(this,false);
 
+        //getActionBar().hide();
+
     }
 
     @Override
