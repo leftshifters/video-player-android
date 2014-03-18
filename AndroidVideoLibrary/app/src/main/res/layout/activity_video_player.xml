@@ -21,13 +21,6 @@
             android:layout_height="wrap_content" >
         </ProgressBar>
     </LinearLayout>
-    <TextView
-        android:id="@+id/videoTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:text="VideoTitle"
-        android:textColor="#ffffff"/>
     <FrameLayout
         android:id="@+id/videoSurfaceContainer"
         android:layout_width="match_parent"
