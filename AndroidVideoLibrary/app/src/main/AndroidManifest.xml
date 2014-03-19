@@ -30,9 +30,11 @@
             android:configChanges="orientation|screenSize"
             android:parentActivityName="com.vxtindia.androidvideolibrary.app.MainActivity"
             android:theme="@style/FullscreenTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vxtindia.androidvideolibrary.app.MainActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
