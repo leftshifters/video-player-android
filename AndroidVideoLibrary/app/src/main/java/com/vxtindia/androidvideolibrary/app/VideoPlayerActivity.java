@@ -1,5 +1,6 @@
 package com.vxtindia.androidvideolibrary.app;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -8,8 +9,12 @@ import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -46,12 +51,19 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     private boolean fullScreen = false;
 
+    private ActionBarHider actionBarHider;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_video_player);
+
+        setupActionBar();
+
+        actionBarHider = new ActionBarHider(this);
+
 
         layoutProgressBar = (LinearLayout) findViewById(R.id.layoutPregressBar);
 
@@ -68,6 +80,23 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         controller = new VideoControllerView(this,false);
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private void setupActionBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -90,7 +119,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
             prepareVideo();
         }
         else{
-            controller.show();
+            showActionBarAndController();
         }
 
     }
@@ -155,7 +184,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        controller.show();
+        showActionBarAndController();
         return false;
     }
 
@@ -174,9 +203,9 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         if(mCurrentPosition == -1)
             player.start();
         else{
-            //player.seekTo(0);
             player.seekTo(mCurrentPosition);
         }
+        showActionBarAndController();
     }
 
     @Override
@@ -317,8 +346,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         Log.d(TAG, "Error: " + framework_err + "," + impl_err);
 
-        //statePrepared=false;
-
         if(layoutProgressBar != null && layoutProgressBar.getVisibility() == View.VISIBLE){
 
             layoutProgressBar.setVisibility(View.GONE);
@@ -345,6 +372,25 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         AlertDialog alert=alertDialogBuilder.create();
         alert.show();
 
+    }
+
+    Handler mHideHandler = new Handler();
+    Runnable mHideRunnable = new Runnable() {
+        @Override
+        public void run() {
+            actionBarHider.hide();
+        }
+    };
+
+    private void delayedHide(int delayMillis) {
+        mHideHandler.removeCallbacks(mHideRunnable);
+        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    private void showActionBarAndController(){
+        actionBarHider.show();
+        delayedHide(3000);
+        controller.show();
     }
 
 }
