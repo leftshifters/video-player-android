@@ -20,6 +20,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -56,8 +57,11 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
 
         setupActionBar();
@@ -79,6 +83,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         videoHolder.addCallback(this);
 
         controller = new VideoControllerView(this,false);
+
 
     }
 
