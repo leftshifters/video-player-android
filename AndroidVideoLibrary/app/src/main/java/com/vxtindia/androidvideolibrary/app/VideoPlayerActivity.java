@@ -68,7 +68,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         actionBarHider = new ActionBarHider(this);
 
-
         layoutProgressBar = (LinearLayout) findViewById(R.id.layoutPregressBar);
 
         videoTitle = getIntent().getStringExtra(KEY_VIDEO_TITLE);
