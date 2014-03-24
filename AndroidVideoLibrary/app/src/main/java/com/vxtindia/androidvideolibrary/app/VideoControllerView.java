@@ -46,7 +46,6 @@ public class VideoControllerView extends FrameLayout {
 
     private boolean             mFromXml;
 
-
     StringBuilder               mFormatBuilder;
     Formatter                   mFormatter;
 
