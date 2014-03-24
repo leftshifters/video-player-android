@@ -1,6 +1,7 @@
 <resources>
 
     <color name="black_overlay">#66000000</color>
-    <color name="gray">#ff87868c</color>
+    <color name="action_bar_background_color">#ff87868c</color>
+    <color name="actionbar_text_color">#ffffffff</color>
 
 </resources>
