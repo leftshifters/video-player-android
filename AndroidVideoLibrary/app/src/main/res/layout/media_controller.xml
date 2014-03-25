@@ -35,7 +35,9 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dip"
             android:layout_weight="1"
-            android:layout_height="32dip" />
+            android:layout_height="32dip"
+            android:progressDrawable="@drawable/seekbar_progress"
+            android:thumb="@drawable/seekbar_thumb_selector" />
 
         <TextView android:id="@+id/time"
             android:textSize="14sp"
