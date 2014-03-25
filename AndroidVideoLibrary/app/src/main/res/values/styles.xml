@@ -12,6 +12,7 @@
         <item name="buttonBarStyle">?android:attr/buttonBarStyle</item>
         <item name="buttonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_up_indicator</item>
+
     </style>
 
     <style name="FullscreenTheme.FullscreenActionBarStyle" parent="android:style/Widget.Holo.ActionBar" >

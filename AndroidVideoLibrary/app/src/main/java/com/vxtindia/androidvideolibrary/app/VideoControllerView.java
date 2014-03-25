@@ -364,9 +364,9 @@ public class VideoControllerView extends FrameLayout {
         }
 
         if (mPlayer.isPlaying()) {
-            mPauseButton.setImageResource(R.drawable.ic_media_pause);
+            mPauseButton.setImageResource(R.drawable.ic_action_pause);
         } else {
-            mPauseButton.setImageResource(R.drawable.ic_media_play);
+            mPauseButton.setImageResource(R.drawable.ic_action_play);
         }
     }
 
