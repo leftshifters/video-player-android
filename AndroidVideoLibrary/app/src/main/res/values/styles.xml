@@ -18,7 +18,7 @@
     <style name="FullscreenTheme.FullscreenActionBarStyle" parent="android:style/Widget.Holo.ActionBar" >
         <item name="android:layout_marginTop">@dimen/status_bar_height</item>
         <item name="android:titleTextStyle">@style/FullscreenTheme.FullscreenActionBarStyle.TitleTextStyle</item>
-        <item name="android:background">@color/action_bar_background_color</item>
+        <item name="android:background">@drawable/actionbar_background</item>
     </style>
 
     <style name="FullscreenTheme.FullscreenActionBarStyle.TitleTextStyle" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
