@@ -37,6 +37,13 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     private static final String TAG = "VideoPlayerActivity" ;
     public static final String KEY_VIDEO_TITLE = "keyVideoLabel";
     public static final String KEY_URL_STRING = "keyUrlString";
+
+    public static final String KEY_SCREEN_ORIENTATION = "keyScreenOrientation";
+
+    public static final int ORIENTATION_PORTRAIT = 0;
+    public static final int ORIENTATION_LANDSCAPE = 1;
+    private int screenOrientation=ORIENTATION_PORTRAIT;
+
     private String url = "";
     private String videoTitle = "";
 
@@ -75,6 +82,8 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
 
         setTitle(videoTitle);
+
+        screenOrientation = getIntent().getIntExtra(KEY_SCREEN_ORIENTATION, ORIENTATION_PORTRAIT);
 
         videoSurface = (SurfaceView) findViewById(R.id.videoSurface);
 
@@ -118,6 +127,9 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         if(player==null){
             Log.d(TAG, "player created");
+
+            setupScreenOrientation();
+
             player =new MediaPlayer();
             layoutProgressBar.setVisibility(View.VISIBLE);
             prepareVideo();
@@ -175,6 +187,16 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         controller.setMediaPlayer(null);
     }
 
+    private void setupScreenOrientation(){
+        if(screenOrientation == ORIENTATION_LANDSCAPE){
+            fullScreen = true;
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }else{
+            fullScreen = false;
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+    }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -226,7 +248,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         Log.d(TAG , "onPrepared");
         layoutProgressBar.setVisibility(View.GONE);
-        fullScreen = getScreenOrientation();
+        //fullScreen = getScreenOrientation();
         controller.setMediaPlayer(this);
         controller.setAnchorView((FrameLayout) findViewById(R.id.videoSurfaceContainer));
         setScreenSize();
