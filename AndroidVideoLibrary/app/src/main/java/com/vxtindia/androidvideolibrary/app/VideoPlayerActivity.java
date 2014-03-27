@@ -210,7 +210,14 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        showActionBarAndController();
+        Log.d(TAG, "onTouchEvent"+ event.getAction());
+        if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if(controller.isShowing()){
+                hideActionBarAndController();
+            }else{
+                showActionBarAndController();
+            }
+        }
         return false;
     }
 
@@ -364,6 +371,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     public void onCompletion(MediaPlayer mediaPlayer) {
         Log.d(TAG, "OnCompletion");
         mediaPlayer.seekTo(0);
+        showActionBarAndController();
     }
 
     //Implement MediaPlayer.OnErrorListener
@@ -400,11 +408,15 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     }
 
+    private int actionBarTimeOut = 3000;
     Handler mHideHandler = new Handler();
     Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
-            actionBarHider.hide();
+            if(controller.isShowing()){
+                delayedHide(actionBarTimeOut);
+            }else
+                actionBarHider.hide();
         }
     };
 
@@ -415,8 +427,13 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     private void showActionBarAndController(){
         actionBarHider.show();
-        delayedHide(3000);
         controller.show();
+        delayedHide(actionBarTimeOut);
+    }
+
+    private void hideActionBarAndController(){
+        controller.hide();
+        delayedHide(0);
     }
 
 }
