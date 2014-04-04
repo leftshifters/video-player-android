@@ -498,6 +498,7 @@ public class VideoControllerView extends FrameLayout {
         boolean canPause();
         boolean isFullScreen();
         void    toggleFullScreen();
+        void    notifyHidden();
     }
 
     private static class MessageHandler extends Handler {
@@ -517,6 +518,7 @@ public class VideoControllerView extends FrameLayout {
             switch (msg.what) {
                 case FADE_OUT:
                     view.hide();
+                    view.mPlayer.notifyHidden();
                     break;
                 case SHOW_PROGRESS:
                     pos = view.setProgress();

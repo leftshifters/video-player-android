@@ -166,6 +166,8 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     protected void onPause() {
         Log.d(TAG, "onPause");
         super.onPause();
+        mCurrentPosition = player.getCurrentPosition();
+        player.pause();
     }
 
     @Override
@@ -351,6 +353,11 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
+    }
+
+    @Override
+    public void notifyHidden() {
+        hideActionBarAndController();
     }
     //End VideoControllerView.MediaPlayerControl
 
