@@ -206,6 +206,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         fullScreen = getScreenOrientation();
         setScreenSize();
         controller.updateFullScreen();
+        showActionBarAndController();
     }
 
     @Override
