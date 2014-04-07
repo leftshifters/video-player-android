@@ -211,8 +211,8 @@ public class VideoControllerView extends FrameLayout {
         mHandler.sendEmptyMessage(SHOW_PROGRESS);
 
         Message msg = mHandler.obtainMessage(FADE_OUT);
+        mHandler.removeMessages(FADE_OUT);
         if (timeout != 0) {
-            mHandler.removeMessages(FADE_OUT);
             mHandler.sendMessageDelayed(msg, timeout);
         }
     }
@@ -231,6 +231,7 @@ public class VideoControllerView extends FrameLayout {
 
         try {
             if(mPlayer.isPlaying()){
+                mPlayer.notifyHidden();
                 mAnchor.removeView(this);
                 mHandler.removeMessages(SHOW_PROGRESS);
                 mShowing = false;
@@ -518,7 +519,6 @@ public class VideoControllerView extends FrameLayout {
             switch (msg.what) {
                 case FADE_OUT:
                     view.hide();
-                    view.mPlayer.notifyHidden();
                     break;
                 case SHOW_PROGRESS:
                     pos = view.setProgress();
