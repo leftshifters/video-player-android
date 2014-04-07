@@ -434,7 +434,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     private void showActionBarAndController(int timeout){
         actionBarHider.show();
-        controller.show(0);
+        controller.show(timeout);
     }
 
     private void hideActionBar(){
