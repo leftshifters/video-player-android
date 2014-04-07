@@ -11,7 +11,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -213,15 +212,27 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d(TAG, "onTouchEvent"+ event.getAction());
         if(event.getAction() == MotionEvent.ACTION_DOWN){
+            Log.d(TAG, "onTouchEvent"+ event.getAction());
             if(controller.isShowing()){
-                hideActionBarAndController();
+                controller.hide();
             }else{
                 showActionBarAndController();
             }
         }
         return false;
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(!hasFocus){
+            Log.d(TAG , "onWindowFocusChanged:window not focused");
+            showActionBarAndController(0);
+        }else{
+            Log.d(TAG , "onWindowFocusChanged:window focused");
+            showActionBarAndController();
+        }
     }
 
     // Implement SurfaceHolder.Callback
@@ -357,7 +368,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     public void notifyHidden() {
-        hideActionBarAndController();
+        hideActionBar();
     }
     //End VideoControllerView.MediaPlayerControl
 
@@ -416,32 +427,18 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     }
 
-    private int actionBarTimeOut = 3000;
-    Handler mHideHandler = new Handler();
-    Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if(controller.isShowing()){
-                delayedHide(actionBarTimeOut);
-            }else
-                actionBarHider.hide();
-        }
-    };
-
-    private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
-    }
-
     private void showActionBarAndController(){
         actionBarHider.show();
         controller.show();
-        delayedHide(actionBarTimeOut);
     }
 
-    private void hideActionBarAndController(){
-        controller.hide();
-        delayedHide(0);
+    private void showActionBarAndController(int timeout){
+        actionBarHider.show();
+        controller.show(0);
+    }
+
+    private void hideActionBar(){
+        actionBarHider.hide();
     }
 
 }
