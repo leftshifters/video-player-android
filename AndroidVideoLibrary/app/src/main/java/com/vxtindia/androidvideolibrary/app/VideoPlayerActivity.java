@@ -58,6 +58,8 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     private boolean fullScreen = false;
 
+    private boolean retry = false;
+
     private ActionBarHider actionBarHider;
 
 
@@ -161,6 +163,19 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         }
     }
 
+    private void startVideo(){
+
+
+        player.setScreenOnWhilePlaying(true);
+
+        if(mCurrentPosition == -1)
+            player.start();
+        else{
+            player.seekTo(mCurrentPosition);
+        }
+        showActionBarAndController();
+    }
+
     @Override
     protected void onPause() {
         Log.d(TAG, "onPause");
@@ -245,14 +260,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     public void surfaceCreated(SurfaceHolder holder) {
         Log.d(TAG , "Surface created");
         player.setDisplay(holder);
-        player.setScreenOnWhilePlaying(true);
-
-        if(mCurrentPosition == -1)
-            player.start();
-        else{
-            player.seekTo(mCurrentPosition);
-        }
-        showActionBarAndController();
+        startVideo();
     }
 
     @Override
@@ -273,6 +281,11 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         controller.setMediaPlayer(this);
         controller.setAnchorView((FrameLayout) findViewById(R.id.videoSurfaceContainer));
         setScreenSize();
+
+        if(retry){
+            startVideo();
+            retry = false;
+        }
 
     }
     // End MediaPlayer.OnPreparedListener
@@ -404,27 +417,56 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
             layoutProgressBar.setVisibility(View.GONE);
         }
 
+        releaseMediaPlayerListeners();
+
         showErrorAlertDialog();
         return true;
     }
     //End MediaPlayer.OnErrorListener
 
+    private void releaseMediaPlayerListeners(){
+
+        Log.d(TAG , "releaseMediaPlayerListeners");
+        player.setOnErrorListener(null);
+        player.setOnBufferingUpdateListener(null);
+        player.setOnCompletionListener(null);
+        player.setOnPreparedListener(null);
+
+    }
+
     public void showErrorAlertDialog(){
 
+        Log.d(TAG , "showErrorAlertDialog");
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle(R.string.error_dialog_title)
                 .setCancelable(false)
                 .setMessage(R.string.error_dialog_message)
-                .setPositiveButton(R.string.error_dialog_button, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.error_dialog_retry_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                            VideoPlayerActivity.this.finish();
+                        retryVideo();
+                    }
+                })
+                .setNegativeButton(R.string.error_dialog_cancel_button, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        VideoPlayerActivity.this.finish();
                     }
                 });
         AlertDialog alert=alertDialogBuilder.create();
         alert.show();
 
+    }
+
+    private void retryVideo(){
+
+        Log.d(TAG , "retryVideo");
+        retry = true;
+        layoutProgressBar.setVisibility(View.VISIBLE);
+        mCurrentPosition = -1;
+        player.reset();
+        prepareVideo();
     }
 
     private void showActionBarAndController(){
