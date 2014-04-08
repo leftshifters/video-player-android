@@ -10,6 +10,7 @@
     <string name="loading_video">Loading...</string>
     <string name="error_dialog_title">Error!</string>
     <string name="error_dialog_message">An error occurred while playing this video.</string>
-    <string name="error_dialog_button">Ok</string>
+    <string name="error_dialog_retry_button">Retry</string>
+    <string name="error_dialog_cancel_button">Cancel</string>
 
 </resources>
