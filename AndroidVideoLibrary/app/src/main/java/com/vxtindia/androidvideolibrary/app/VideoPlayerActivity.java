@@ -39,9 +39,10 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     public static final String KEY_SCREEN_ORIENTATION = "keyScreenOrientation";
 
-    public static final int ORIENTATION_PORTRAIT = 0;
-    public static final int ORIENTATION_LANDSCAPE = 1;
-    private int screenOrientation=ORIENTATION_PORTRAIT;
+    public static final  int ORIENTATION_DEFAULT = 0;
+    public static final int ORIENTATION_PORTRAIT = 1;
+    public static final int ORIENTATION_LANDSCAPE = 2;
+    private int screenOrientation=ORIENTATION_DEFAULT;
 
     private String url = "";
     private String videoTitle = "";
@@ -84,7 +85,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
         setTitle(videoTitle);
 
-        screenOrientation = getIntent().getIntExtra(KEY_SCREEN_ORIENTATION, ORIENTATION_PORTRAIT);
+        screenOrientation = getIntent().getIntExtra(KEY_SCREEN_ORIENTATION, ORIENTATION_DEFAULT);
 
         videoSurface = (SurfaceView) findViewById(R.id.videoSurface);
 
@@ -207,7 +208,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         if(screenOrientation == ORIENTATION_LANDSCAPE){
             fullScreen = true;
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else{
+        }else if(screenOrientation == ORIENTATION_PORTRAIT){
             fullScreen = false;
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
