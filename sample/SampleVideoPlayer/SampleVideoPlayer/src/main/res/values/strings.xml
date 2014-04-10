@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SampleVideoPlayer</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="videoUrl">http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4</string>
+    <string name="videoUrl1">http://www.boisestatefootball.com/sites/default/files/videos/original/01\u002520-\u002520coach\u002520pete\u002520bio_4.mp4</string>
+    <string name="videoTitle">Big Buck Bunny</string>
+    <string name="orientationPortrait">Portrait</string>
+    <string name="orientationLandscape">Landscape</string>
+    <string name="orientationDefault">Default</string>
+    <string name="play">Play</string>
+    <string name="labelVideoUrl">Video Url</string>
+    <string name="labelVideoTitle">Video Title</string>
+
+</resources>
