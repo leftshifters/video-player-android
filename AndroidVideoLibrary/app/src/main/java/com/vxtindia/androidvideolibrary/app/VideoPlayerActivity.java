@@ -266,8 +266,10 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         Log.d(TAG , "Surface Destroyed");
-        mCurrentPosition = player.getCurrentPosition();
-        player.pause();
+        if(player != null){
+            mCurrentPosition = player.getCurrentPosition();
+            player.pause();
+        }
     }
     // End SurfaceHolder.Callback
 
