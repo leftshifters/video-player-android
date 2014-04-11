@@ -1,0 +1,6 @@
+<resources>
+
+    <!-- For API 19+ -->
+    <dimen name="status_bar_height">25dp</dimen>
+
+</resources>

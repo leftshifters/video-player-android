@@ -1,0 +1,29 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="FullscreenTheme" parent="android:Theme.Holo">
+        <item name="android:actionBarStyle">@style/FullscreenTheme.FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="buttonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="buttonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_up_indicator</item>
+
+    </style>
+
+    <style name="FullscreenTheme.FullscreenActionBarStyle" parent="android:style/Widget.Holo.ActionBar" >
+        <item name="android:layout_marginTop">@dimen/status_bar_height</item>
+        <item name="android:titleTextStyle">@style/FullscreenTheme.FullscreenActionBarStyle.TitleTextStyle</item>
+        <item name="android:background">@drawable/actionbar_background</item>
+    </style>
+
+    <style name="FullscreenTheme.FullscreenActionBarStyle.TitleTextStyle" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/actionbar_text_color</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+</resources>
