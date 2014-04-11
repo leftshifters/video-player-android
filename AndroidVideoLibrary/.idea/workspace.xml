@@ -102,33 +102,35 @@
       <file leaf-file-name="VideoControllerView.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/vxtindia/androidvideolibrary/app/VideoControllerView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="483" column="0" selection-start="15578" selection-end="15578" vertical-scroll-proportion="-27.192308" vertical-offset="6178" max-vertical-offset="7620">
-              <folding>
-                <element signature="e#11029#11175#0" expanded="true" />
-                <element signature="e#11168#11169#0" expanded="true" />
-                <element signature="e#11233#11384#0" expanded="true" />
-                <element signature="e#11377#11378#0" expanded="true" />
-              </folding>
+            <state line="483" column="0" selection-start="15578" selection-end="15578" vertical-scroll-proportion="0.0" vertical-offset="7245" max-vertical-offset="7980">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VideoPlayerActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="VideoPlayerActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/vxtindia/androidvideolibrary/app/VideoPlayerActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="411" column="36" selection-start="11931" selection-end="11931" vertical-scroll-proportion="1.338983" vertical-offset="5143" max-vertical-offset="6240">
-              <folding>
-                <element signature="e#9075#9076#0" expanded="true" />
-                <element signature="e#9112#9113#0" expanded="true" />
-                <element signature="e#11091#11118#0" expanded="true" />
-                <element signature="e#11186#11215#0" expanded="true" />
-                <element signature="e#11252#11286#0" expanded="true" />
-                <element signature="e#11288#11517#0" expanded="true" />
-                <element signature="e#11498#11499#0" expanded="true" />
-                <element signature="e#11554#11589#0" expanded="true" />
-                <element signature="e#11591#11892#0" expanded="true" />
-                <element signature="e#11873#11874#0" expanded="true" />
-              </folding>
+            <state line="105" column="0" selection-start="3382" selection-end="3382" vertical-scroll-proportion="0.0" vertical-offset="1906" max-vertical-offset="6120">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="25" selection-start="151" selection-end="151" vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="720">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="43" column="9" selection-start="444" selection-end="444" vertical-scroll-proportion="0.7619048" vertical-offset="309" max-vertical-offset="750">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -136,7 +138,7 @@
       <file leaf-file-name="seekbar_thumb_selector.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-hdpi/seekbar_thumb_selector.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
+            <state line="1" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="210">
               <folding />
             </state>
           </provider>
@@ -979,7 +981,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="1395644440000" />
+        <entry key="$PROJECT_DIR$" value="1397196373000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1205,7 +1207,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/vxtindia/androidvideolibrary/app/VideoControllerView1.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_video_player_activity1.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_video_player1.xml" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/app/.gitignore" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/main.xml" />
@@ -1228,12 +1229,14 @@
         <option value="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/actionbar_background.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/seekbar_progress.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/seekbar_thumb_selector.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="y" value="22" />
     <option name="width" value="1600" />
-    <option name="height" value="900" />
+    <option name="height" value="813" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1280,6 +1283,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1322,48 +1327,12 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidVideoLibrary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AndroidVideoLibrary" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
+              <option name="myItemId" value=".idea" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1382,7 +1351,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="d6772e75" />
-    <property name="FullScreen" value="true" />
+    <property name="FullScreen" value="false" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="full.screen.before.presentation.mode" value="true" />
@@ -1430,6 +1399,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -1455,19 +1437,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1609,15 +1578,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1600" height="900" extended-state="0" />
+    <frame x="0" y="22" width="1600" height="813" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="SLIDING" type="FLOATING" visible="false" weight="0.32991013" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" x="0" y="0" width="128" height="900" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32862645" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34739456" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34770516" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23325062" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -1638,6 +1606,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32862645" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287841" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1667,18 +1636,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/vxtindia/androidvideolibrary/app/VideoPlayerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="341" column="65" selection-start="9361" selection-end="9361" vertical-scroll-proportion="0.0" vertical-offset="4935" max-vertical-offset="4980">
-          <folding>
-            <element signature="e#9075#9076#0" expanded="true" />
-            <element signature="e#9112#9113#0" expanded="true" />
-            <element signature="e#11091#11118#0" expanded="true" />
-            <element signature="e#11186#11215#0" expanded="true" />
-            <element signature="e#11252#11286#0" expanded="true" />
-            <element signature="e#11288#11517#0" expanded="true" />
-            <element signature="e#11498#11499#0" expanded="true" />
-            <element signature="e#11554#11589#0" expanded="true" />
-            <element signature="e#11591#11892#0" expanded="true" />
-            <element signature="e#11873#11874#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1713,18 +1671,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/vxtindia/androidvideolibrary/app/VideoPlayerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="44" column="3" selection-start="1480" selection-end="1480" vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="5640">
-          <folding>
-            <element signature="e#9075#9076#0" expanded="true" />
-            <element signature="e#9112#9113#0" expanded="true" />
-            <element signature="e#11091#11118#0" expanded="true" />
-            <element signature="e#11186#11215#0" expanded="true" />
-            <element signature="e#11252#11286#0" expanded="true" />
-            <element signature="e#11288#11517#0" expanded="true" />
-            <element signature="e#11498#11499#0" expanded="true" />
-            <element signature="e#11554#11589#0" expanded="true" />
-            <element signature="e#11591#11892#0" expanded="true" />
-            <element signature="e#11873#11874#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1759,18 +1706,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/vxtindia/androidvideolibrary/app/VideoPlayerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="68" column="67" selection-start="2297" selection-end="2297" vertical-scroll-proportion="0.0" vertical-offset="1020" max-vertical-offset="5520">
-          <folding>
-            <element signature="e#9075#9076#0" expanded="true" />
-            <element signature="e#9112#9113#0" expanded="true" />
-            <element signature="e#11091#11118#0" expanded="true" />
-            <element signature="e#11186#11215#0" expanded="true" />
-            <element signature="e#11252#11286#0" expanded="true" />
-            <element signature="e#11288#11517#0" expanded="true" />
-            <element signature="e#11498#11499#0" expanded="true" />
-            <element signature="e#11554#11589#0" expanded="true" />
-            <element signature="e#11591#11892#0" expanded="true" />
-            <element signature="e#11873#11874#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1787,18 +1723,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/vxtindia/androidvideolibrary/app/VideoPlayerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="104" column="32" selection-start="3291" selection-end="3291" vertical-scroll-proportion="0.0" vertical-offset="1560" max-vertical-offset="5700">
-          <folding>
-            <element signature="e#9075#9076#0" expanded="true" />
-            <element signature="e#9112#9113#0" expanded="true" />
-            <element signature="e#11091#11118#0" expanded="true" />
-            <element signature="e#11186#11215#0" expanded="true" />
-            <element signature="e#11252#11286#0" expanded="true" />
-            <element signature="e#11288#11517#0" expanded="true" />
-            <element signature="e#11498#11499#0" expanded="true" />
-            <element signature="e#11554#11589#0" expanded="true" />
-            <element signature="e#11591#11892#0" expanded="true" />
-            <element signature="e#11873#11874#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1817,18 +1742,7 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/vxtindia/androidvideolibrary/app/VideoPlayerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="70" column="13" selection-start="2273" selection-end="2273" vertical-scroll-proportion="0.0" vertical-offset="1050" max-vertical-offset="3270">
-          <folding>
-            <element signature="e#9075#9076#0" expanded="true" />
-            <element signature="e#9112#9113#0" expanded="true" />
-            <element signature="e#11091#11118#0" expanded="true" />
-            <element signature="e#11186#11215#0" expanded="true" />
-            <element signature="e#11252#11286#0" expanded="true" />
-            <element signature="e#11288#11517#0" expanded="true" />
-            <element signature="e#11498#11499#0" expanded="true" />
-            <element signature="e#11554#11589#0" expanded="true" />
-            <element signature="e#11591#11892#0" expanded="true" />
-            <element signature="e#11873#11874#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1941,20 +1855,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="6" selection-start="0" selection-end="434" vertical-scroll-proportion="0.78313255" vertical-offset="0" max-vertical-offset="720">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="17" selection-start="114" selection-end="114" vertical-scroll-proportion="-0.14457831" vertical-offset="222" max-vertical-offset="720">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="39" selection-start="188" selection-end="188" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="330">
@@ -1964,13 +1864,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/vxtindia/androidvideolibrary/app/VideoControllerView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="483" column="0" selection-start="15578" selection-end="15578" vertical-scroll-proportion="-27.192308" vertical-offset="6178" max-vertical-offset="7620">
-          <folding>
-            <element signature="e#11029#11175#0" expanded="true" />
-            <element signature="e#11168#11169#0" expanded="true" />
-            <element signature="e#11233#11384#0" expanded="true" />
-            <element signature="e#11377#11378#0" expanded="true" />
-          </folding>
+        <state line="483" column="0" selection-start="15578" selection-end="15578" vertical-scroll-proportion="0.0" vertical-offset="7245" max-vertical-offset="7980">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2039,19 +1934,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/vxtindia/androidvideolibrary/app/VideoPlayerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="411" column="36" selection-start="11931" selection-end="11931" vertical-scroll-proportion="1.338983" vertical-offset="5143" max-vertical-offset="6240">
-          <folding>
-            <element signature="e#9075#9076#0" expanded="true" />
-            <element signature="e#9112#9113#0" expanded="true" />
-            <element signature="e#11091#11118#0" expanded="true" />
-            <element signature="e#11186#11215#0" expanded="true" />
-            <element signature="e#11252#11286#0" expanded="true" />
-            <element signature="e#11288#11517#0" expanded="true" />
-            <element signature="e#11498#11499#0" expanded="true" />
-            <element signature="e#11554#11589#0" expanded="true" />
-            <element signature="e#11591#11892#0" expanded="true" />
-            <element signature="e#11873#11874#0" expanded="true" />
-          </folding>
+        <state line="105" column="0" selection-start="3382" selection-end="3382" vertical-scroll-proportion="0.0" vertical-offset="1906" max-vertical-offset="6120">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="25" selection-start="151" selection-end="151" vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="720">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="9" selection-start="444" selection-end="444" vertical-scroll-proportion="0.7619048" vertical-offset="309" max-vertical-offset="750">
+          <folding />
         </state>
       </provider>
     </entry>
