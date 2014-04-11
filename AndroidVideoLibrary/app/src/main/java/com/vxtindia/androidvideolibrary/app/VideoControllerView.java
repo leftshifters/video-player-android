@@ -239,7 +239,6 @@ public class VideoControllerView extends FrameLayout {
         } catch (IllegalArgumentException ex) {
             Log.w("MediaController", "already removed");
         }
-        //mShowing = false;
     }
 
     private String stringForTime(int timeMs) {
@@ -475,17 +474,12 @@ public class VideoControllerView extends FrameLayout {
 
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
-        //super.onInitializeAccessibilityEvent(event);
         event.setClassName(VideoControllerView.class.getName());
     }
 
     @Override
     public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
-        //super.onInitializeAccessibilityNodeInfo(info);
-        //info.setClassName(VideoControllerView.class.getName());
     }
-
-
 
 
     public interface MediaPlayerControl {

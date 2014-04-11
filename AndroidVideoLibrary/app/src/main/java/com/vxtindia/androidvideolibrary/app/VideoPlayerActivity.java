@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -39,7 +38,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     public static final String KEY_SCREEN_ORIENTATION = "keyScreenOrientation";
 
-    public static final  int ORIENTATION_DEFAULT = 0;
+    public static final int ORIENTATION_DEFAULT = 0;
     public static final int ORIENTATION_PORTRAIT = 1;
     public static final int ORIENTATION_LANDSCAPE = 2;
     private int screenOrientation=ORIENTATION_DEFAULT;
@@ -66,7 +65,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
@@ -82,7 +80,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         videoTitle = getIntent().getStringExtra(KEY_VIDEO_TITLE);
         url = getIntent().getStringExtra(KEY_URL_STRING);
 
-
         setTitle(videoTitle);
 
         screenOrientation = getIntent().getIntExtra(KEY_SCREEN_ORIENTATION, ORIENTATION_DEFAULT);
@@ -93,7 +90,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         videoHolder.addCallback(this);
 
         controller = new VideoControllerView(this,false);
-
 
     }
 
@@ -116,23 +112,20 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     protected void onStart() {
-        Log.d(TAG, "onStart");
         super.onStart();
     }
 
     @Override
     protected void onResume() {
-        Log.d(TAG, "onResume");
         super.onResume();
 
         fullScreen = getScreenOrientation();
 
-        if(player==null){
-            Log.d(TAG, "player created");
+        if(player == null){
 
             setupScreenOrientation();
 
-            player =new MediaPlayer();
+            player = new MediaPlayer();
             layoutProgressBar.setVisibility(View.VISIBLE);
             prepareVideo();
         }
@@ -165,8 +158,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     }
 
     private void startVideo(){
-
-
         player.setScreenOnWhilePlaying(true);
 
         if(mCurrentPosition == -1)
@@ -179,7 +170,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     protected void onPause() {
-        Log.d(TAG, "onPause");
         super.onPause();
         mCurrentPosition = player.getCurrentPosition();
         player.pause();
@@ -187,14 +177,11 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
 
     @Override
     protected void onStop() {
-        Log.d(TAG, "onStop");
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-
-        Log.d(TAG, "onDestroy");
         super.onDestroy();
 
         if(player != null){
@@ -218,8 +205,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        Log.d(TAG , "onConfigurationChanged");
-
         fullScreen = getScreenOrientation();
         setScreenSize();
         controller.updateFullScreen();
@@ -229,7 +214,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
-            Log.d(TAG, "onTouchEvent"+ event.getAction());
             if(controller.isShowing()){
                 controller.hide();
             }else{
@@ -243,10 +227,8 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if(!hasFocus){
-            Log.d(TAG , "onWindowFocusChanged:window not focused");
             showActionBarAndController(0);
         }else{
-            Log.d(TAG , "onWindowFocusChanged:window focused");
             showActionBarAndController();
         }
     }
@@ -254,19 +236,16 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     // Implement SurfaceHolder.Callback
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        Log.d(TAG , "Surface Changed");
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.d(TAG , "Surface created");
         player.setDisplay(holder);
         startVideo();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.d(TAG , "Surface Destroyed");
         if(player != null){
             mCurrentPosition = player.getCurrentPosition();
             player.pause();
@@ -277,10 +256,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     // Implement MediaPlayer.OnPreparedListener
     @Override
     public void onPrepared(MediaPlayer mp) {
-
-        Log.d(TAG , "onPrepared");
         layoutProgressBar.setVisibility(View.GONE);
-        //fullScreen = getScreenOrientation();
         controller.setMediaPlayer(this);
         controller.setAnchorView((FrameLayout) findViewById(R.id.videoSurfaceContainer));
         setScreenSize();
@@ -289,12 +265,10 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
             startVideo();
             retry = false;
         }
-
     }
     // End MediaPlayer.OnPreparedListener
 
     public boolean getScreenOrientation(){
-
         int orientation = getResources().getConfiguration().orientation;
 
         if(orientation == Configuration.ORIENTATION_LANDSCAPE){
@@ -307,11 +281,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     }
 
     public void setScreenSize(){
-
-        Log.d(TAG, "setScreenSize");
-
         int screenWidth = getResources().getDisplayMetrics().widthPixels;
-        //int screenHeight = getResources().getDisplayMetrics().heightPixels;
 
         ViewGroup.LayoutParams lp = videoSurface.getLayoutParams();
 
@@ -345,30 +315,24 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     public void seekTo(int i) {
         player.seekTo(i);
     }
-
     @Override
     public boolean isPlaying() {
             return player.isPlaying();
-
     }
     @Override
     public int getBufferPercentage() {
-        //Log.d(TAG, "buffer Percentage=" + bufferPosition);
         return bufferPosition;
     }
     @Override
     public boolean canPause() {
         return true;
     }
-
-
     @Override
     public boolean isFullScreen() {
         return fullScreen;
     }
     @Override
     public void toggleFullScreen() {
-
         fullScreen = !fullScreen;
 
         controller.updateFullScreen();
@@ -379,9 +343,7 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
         else{
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
-
     }
-
     @Override
     public void notifyHidden() {
         hideActionBar();
@@ -392,7 +354,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     //Implement MediaPlayer.OnBufferingUpdateListener
     @Override
     public void onBufferingUpdate(MediaPlayer mediaPlayer, int i) {
-        //Log.d("OnBufferingUpdate",""+i);
         bufferPosition=i;
     }
     //End MediaPlayer.OnBufferingUpdateListener
@@ -404,7 +365,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     //Implement MediaPlayer.OnCompletionListener
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        Log.d(TAG, "OnCompletion");
         mediaPlayer.seekTo(0);
         showActionBarAndController();
     }
@@ -412,9 +372,6 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     //Implement MediaPlayer.OnErrorListener
     @Override
     public boolean onError(MediaPlayer mediaPlayer, int framework_err, int impl_err) {
-
-        Log.d(TAG, "Error: " + framework_err + "," + impl_err);
-
         if(layoutProgressBar != null && layoutProgressBar.getVisibility() == View.VISIBLE){
 
             layoutProgressBar.setVisibility(View.GONE);
@@ -428,18 +385,13 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     //End MediaPlayer.OnErrorListener
 
     private void releaseMediaPlayerListeners(){
-
-        Log.d(TAG , "releaseMediaPlayerListeners");
         player.setOnErrorListener(null);
         player.setOnBufferingUpdateListener(null);
         player.setOnCompletionListener(null);
         player.setOnPreparedListener(null);
-
     }
 
     public void showErrorAlertDialog(){
-
-        Log.d(TAG , "showErrorAlertDialog");
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle(R.string.error_dialog_title)
                 .setCancelable(false)
@@ -459,12 +411,9 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
                 });
         AlertDialog alert=alertDialogBuilder.create();
         alert.show();
-
     }
 
     private void retryVideo(){
-
-        Log.d(TAG , "retryVideo");
         retry = true;
         layoutProgressBar.setVisibility(View.VISIBLE);
         mCurrentPosition = -1;
@@ -485,5 +434,4 @@ public class VideoPlayerActivity extends Activity implements SurfaceHolder.Callb
     private void hideActionBar(){
         actionBarHider.hide();
     }
-
 }
